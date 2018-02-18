@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SR Assessment</string>
+    <string name="txt_volume_label">Volume set at: {0}%</string>
+</resources>

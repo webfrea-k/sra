@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VolumeControlView">
+        <attr name="vcv_volume_percentage" format="integer" />
+        <attr name="vcv_scale" format="integer" />
+        <attr name="vcv_color_background" format="color" />
+        <attr name="vcv_color_foreground" format="color" />
+    </declare-styleable>
+</resources>
