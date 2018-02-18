@@ -87,22 +87,34 @@ public class VolumeControlView extends View
         rectanglePaintBG.setColor(color_bg);
 
         boolean fillVolume = false;
+        int original_percentage = volume_percentage;
         //Iterate over volume bars, set "active" color for every bar after the bar that was pressed
         for(int i=0; i<volumeBars.size(); i++)
         {
             VolumeBar vb = volumeBars.get(i);
-            //Set active bars if current bar was clicked, or the bar index is the same as current volume or if we must color all the bars from now on (fillVolume)
-            if(vb.isTouchCoordinateWithinBar(touch_coordinate_y) || (vb.index == volume && touch_coordinate_y ==-1) || fillVolume)
+            //Calculated volume matches the index of current bar -> start coloring active bars
+            if((vb.index == volume && touch_coordinate_y ==-1))
             {
-                //If this is the first "active" bar (fillVolume flag has not been set yet)
-                if(!fillVolume)
-                {
-                    //Calculate percentage for interface
-                    volume_percentage = (vb.index * 100) / volumeBars.size();
-                }
+                //Calculate percentage for interface
+                volume_percentage = original_percentage;
                 fillVolume = true;
                 canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintFG);
             }
+            //Currently touched position matches specific volume bar -> start coloring active bars
+            else if(vb.isTouchCoordinateWithinBar(touch_coordinate_y))
+            {
+                //Calculate percentage from click
+                volume_percentage = (vb.index * 100) / volumeBars.size();
+                original_percentage = volume_percentage;
+                fillVolume = true;
+                canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintFG);
+            }
+            //If fill Volume is true, we only need to finish coloring active bars till the end
+            else if(fillVolume)
+            {
+                canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintFG);
+            }
+            //Draw normal "non-active" bar
             else
             {
                 canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintBG);
