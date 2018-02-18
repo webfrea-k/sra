@@ -114,6 +114,13 @@ public class VolumeControlView extends View
             {
                 canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintFG);
             }
+            //Just set the correct percentage - volume is less than 1 bar
+            else if(volume == 0)
+            {
+                volume_percentage = original_percentage;
+                canvas.drawRect(0, vb.getStart(), viewWidth, vb.getEnd(), rectanglePaintBG);
+
+            }
             //Draw normal "non-active" bar
             else
             {
