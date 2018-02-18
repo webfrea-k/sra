@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.IntRange;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -163,8 +162,12 @@ public class VolumeControlView extends View
         invalidate();
         requestLayout();
     }
-    public void setVolumeControlVolume(@IntRange(from=0,to=100)int volume)
+    public void setVolumeControlVolume(int volume)
     {
+        if(volume >100)
+        {
+            volume = 100;
+        }
         this.volume = (volumeBars.size() * volume)/100;
         this.volume_percentage = volume;
         invalidate();
