@@ -22,6 +22,8 @@ public class VolumeControlView extends View
     private int double_scale;
     private int color_fg;
     private int color_bg;
+    private float x1,x2,y1,y2,t1,t2;
+    private long CLICK_DURATION = 400;
     private int volume_percentage=-1;
     private int touch_coordinate_y=-1;
     private Paint rectanglePaintFG;
@@ -203,7 +205,23 @@ public class VolumeControlView extends View
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         super.performClick();
+
+        switch (motionEvent.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                x1 = motionEvent.getX();
+                y1 = motionEvent.getY();
+                t1 = System.currentTimeMillis();
+                return true;
+            case MotionEvent.ACTION_UP:
+                x2 = motionEvent.getX();
+                y2 = motionEvent.getY();
+                t2 = System.currentTimeMillis();
+                return true;
+        }
         touch_coordinate_y = (int)motionEvent.getY();
+
+
         invalidate();
         requestLayout();
         return super.onTouchEvent(motionEvent);
